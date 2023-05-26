@@ -20,6 +20,15 @@ app.use(express.json());
 
 app.use(requestLogger);
 
+app.use(
+  cors({
+    origin: ['https://diploma.nomoredomains.rocks',
+      'http://diploma.nomoredomains.rocks',
+      'https://localhost:3000',
+      'http://localhost:3000'],
+  }),
+);
+
 app.use('/', router);
 
 app.use(errorLogger);
