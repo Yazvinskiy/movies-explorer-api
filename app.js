@@ -3,12 +3,15 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 require('dotenv').config();
 const cors = require('cors');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const helmet = require('helmet');
 
 const app = express();
 const PORT = 3000;
 const router = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const centralErrorСontroller = require('./middlewares/centralErrorСontroller');
+const limiter = require('./middlewares/rateLimit');
 
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb').then(() => {
   console.log('Connecting mongo');
@@ -28,6 +31,10 @@ app.use(
       'http://localhost:3000'],
   }),
 );
+
+app.use(limiter);
+
+app.use(helmet);
 
 app.use('/', router);
 
