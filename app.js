@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 require('dotenv').config();
 const cors = require('cors');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const helmet = require('helmet');
 
 const app = express();
@@ -34,7 +33,7 @@ app.use(
 
 app.use(limiter);
 
-app.use(helmet);
+app.use(helmet());
 
 app.use('/', router);
 
