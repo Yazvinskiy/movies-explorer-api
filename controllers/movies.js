@@ -5,7 +5,7 @@ const ForbiddenError = require('../errors/ForbiddenError');
 
 const getMovies = async (req, res, next) => {
   try {
-    const movie = await Movie.find({});
+    const movie = await Movie.find({ owner: req.user._id });
     res.send(movie);
   } catch (err) {
     next(err);
@@ -54,7 +54,7 @@ const deleteMovie = async (req, res, next) => {
     if (movie.owner.toHexString() !== req.user._id) {
       throw new ForbiddenError('Фильм с указанным id не является вашей');
     }
-    await Movie.deleteOne(movie);
+    await movie.deleteOne();
     res.send(movie);
   } catch (err) {
     if (err.name === 'CastError') {

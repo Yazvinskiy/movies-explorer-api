@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     );
   } catch (err) {
     // отправим ошибку, если не получилось
-    next(new UnauthorizedError(' Необходима авторизация '));
+    return next(new UnauthorizedError(' Необходима авторизация '));
   }
 
   req.user = payload; // записываем пейлоуд в объект запроса
